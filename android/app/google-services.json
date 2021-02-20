@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "627697574031",
+    "project_id": "teacomplex",
+    "storage_bucket": "teacomplex.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627697574031:android:94f8eaf3c27ffdafac50fa",
+        "android_client_info": {
+          "package_name": "com.overloadlab.teacomplex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627697574031-vuqdfdsn68123r9qk1uuqmtasaet3g6t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.overloadlab.teacomplex",
+            "certificate_hash": "ece99de093aec8d7797cb1a9b28132ef23cf5f43"
+          }
+        },
+        {
+          "client_id": "627697574031-5pv3iboimar55orcioltcka383a0mb07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGaOd1t27-kqM2NOlekPXFsU3dRsFLKag"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627697574031-5pv3iboimar55orcioltcka383a0mb07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
