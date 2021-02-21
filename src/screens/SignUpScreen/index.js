@@ -62,7 +62,7 @@ export const SignUpScreen = ({navigation}) => {
         <Thumbnail
           style={styles.logo}
           source={{
-            uri: 'https://overloadlab.com.br/EmbryoView/vaca.png',
+            uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
           }}
         />
         <Text style={styles.name}>Cadastre-se</Text>

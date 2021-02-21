@@ -33,7 +33,7 @@ export const MenuDrawer = ({navigation}) => {
         style={styles.imagen}
         square
         source={{
-          uri: 'https://overloadlab.com.br/EmbryoView/perfil.jpeg',
+          uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
         }}
       />
       <Content style={styles.content}>

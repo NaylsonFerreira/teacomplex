@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 200,
     height: 200,
-    marginTop: 100,
+    marginTop: 200,
     alignSelf: 'center',
   },
   name: {
@@ -33,12 +33,12 @@ export const LoadingScreen = ({navigation}) => {
           <Thumbnail
             style={styles.logo}
             source={{
-              uri: 'https://overloadlab.com.br/EmbryoView/vaca.png',
+              uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
             }}
           />
-          <Text style={styles.name}>EmbryoView</Text>
+          <Text style={styles.name}>TeaComplex</Text>
         </TouchableOpacity>
-        <Spinner size={60} />
+        <Spinner size={60} color="blue" />
       </Content>
     </Container>
   );

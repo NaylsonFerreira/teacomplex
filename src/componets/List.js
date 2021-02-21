@@ -35,22 +35,19 @@ const ItemAvatar = (props) => {
           style={styles.imagen}
           square
           source={{
-            uri:
-              'https://overloadlab.com.br/EmbryoView/' +
-              props.index +
-              'celulas.jpg',
+            uri: 'https://overloadlab.com.br/pcomplex/static/logo2.png',
           }}
         />
       </Left>
       <Body style={styles.body}>
-        <Text>Embrião #{props.index}</Text>
+        <Text>Khunters</Text>
         <Text note numberOfLines={2}>
-          Obteve-se média geral de 5,2 (135/26) embriões viáveis por doadora.
+          Faça amigos e divirta-se
         </Text>
       </Body>
       <Right>
         <Button transparent>
-          <Text>Ver</Text>
+          <Text>Jogar</Text>
         </Button>
       </Right>
     </ListItem>
@@ -65,11 +62,11 @@ const Lista = (props) => {
   return (
     <List style={styles.lista}>
       <Separator bordered>
-        <Text style={styles.separator}>UFERSA - EmbryoView 1</Text>
+        <Text style={styles.separator}>Jogos de Aventura</Text>
       </Separator>
       {itens}
       <Separator bordered>
-        <Text style={styles.separator}>UFERSA - EmbryoView 2</Text>
+        <Text style={styles.separator}>Jogos de Corrida</Text>
       </Separator>
       {itens}
     </List>

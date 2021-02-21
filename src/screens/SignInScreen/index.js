@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   logo: {
     width: 200,
     height: 200,
-    marginTop: 10,
+    marginTop: 25,
     alignSelf: 'center',
   },
   name: {
@@ -65,10 +65,10 @@ export const SignInScreen = ({navigation}) => {
         <Thumbnail
           style={styles.logo}
           source={{
-            uri: 'https://overloadlab.com.br/EmbryoView/vaca.png',
+            uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
           }}
         />
-        <Text style={styles.name}>EmbryoView</Text>
+        <Text style={styles.name}>TeaComplex</Text>
         <Form style={styles.form}>
           <Item floatingLabel>
             <Label>E-mail</Label>

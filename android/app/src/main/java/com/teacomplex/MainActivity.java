@@ -1,4 +1,4 @@
-package com.teacomplex;
+package com.overloadlab.teacomplex;
 
 import com.facebook.react.ReactActivity;
 

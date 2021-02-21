@@ -49,7 +49,7 @@ const Header = (props) => {
       </View>
       <View style={styles.viewRight}>
         <Button transparent>
-          {/* <IconEnt size={30} name="star" style={styles.icon} /> */}
+          <IconEnt size={30} name="star" style={styles.icon} />
         </Button>
       </View>
     </NbHeader>
