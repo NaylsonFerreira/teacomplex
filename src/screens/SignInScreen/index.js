@@ -11,6 +11,7 @@ import {
   Text,
   Button,
   Thumbnail,
+  Spinner,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {LoginGoogle} from '../../componets';
@@ -57,24 +58,34 @@ const styles = StyleSheet.create({
     color: '#4285f4',
     textDecorationLine: 'underline',
   },
+  msg: {
+    textAlign: 'center',
+    fontSize: 20,
+    color: 'red',
+  },
 });
 
 export const SignInScreen = ({navigation}) => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    email: 'naylsonfsa@gmail.com',
+    password: 'overload',
+  });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
-    auth()
-      .signInWithEmailAndPassword(data?.email, data?.password)
-      .then(() => {
-        navigation.navigate('HomeScreen');
-      })
-      .catch((error) => {
-        setMsg('Credenciais inválidas');
-      });
-    setLoading(true);
+    if (data?.email && data?.password) {
+      auth()
+        .signInWithEmailAndPassword(data.email, data.password)
+        .then(() => {
+          navigation.navigate('HomeScreen');
+        })
+        .catch((error) => {
+          setMsg('Credenciais inválidas');
+        });
+    }
+    setLoading(false);
   };
   return (
     <Container style={styles.container}>
@@ -86,35 +97,43 @@ export const SignInScreen = ({navigation}) => {
           }}
         />
         <Text style={styles.name}>TeaComplex</Text>
-        <Form style={styles.form}>
-          <Item floatingLabel>
-            <Label>E-mail</Label>
-            <Input onChange={(value) => setData({...data, email: value})} />
-          </Item>
-          <Item floatingLabel last>
-            <Label>Senha</Label>
-            <Input onChange={(value) => setData({...data, password: value})} />
-          </Item>
-          {msg && <Text style={styles.msg}>{msg}</Text>}
-          <Button
-            iconLeft
-            disabled={loading}
-            style={styles.login_email}
-            onPress={() => handleSubmit()}>
-            <Icon size={20} color="white" name="envelope" />
-            <Text>Entrar com email e senha</Text>
-          </Button>
-          <Button
-            iconLeft
-            style={styles.login_google}
-            onPress={() => LoginGoogle()}>
-            <Icon size={20} color="white" name="google" />
-            <Text>Entrar com conta google</Text>
-          </Button>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
-            <Text style={styles.signup}>Criar uma conta</Text>
-          </TouchableOpacity>
-        </Form>
+        {loading ? (
+          <Spinner size={60} color="blue" />
+        ) : (
+          <Form style={styles.form}>
+            {msg && <Text style={styles.msg}>{msg}</Text>}
+            <Item floatingLabel>
+              <Label>E-mail</Label>
+              <Input
+                defaultValue={data.email}
+                onChangeText={(value) => setData({...data, email: value})}
+              />
+            </Item>
+            <Item floatingLabel last>
+              <Label>Senha</Label>
+              <Input
+                defaultValue={data.password}
+                onChangeText={(value) => setData({...data, password: value})}
+              />
+            </Item>
+            <Button
+              iconLeft
+              disabled={loading}
+              style={styles.login_email}
+              onPress={() => handleSubmit()}>
+              <Icon size={20} color="white" name="envelope" />
+              <Text>Entrar com email e senha</Text>
+            </Button>
+            {/* <Button iconLeft style={styles.login_google} onPress={() => {}}>
+              <Icon size={20} color="white" name="google" />
+              <Text>Entrar com conta google</Text>
+            </Button> */}
+            <TouchableOpacity
+              onPress={() => navigation.navigate('SignUpScreen')}>
+              <Text style={styles.signup}>Criar uma conta</Text>
+            </TouchableOpacity>
+          </Form>
+        )}
       </Content>
     </Container>
   );
