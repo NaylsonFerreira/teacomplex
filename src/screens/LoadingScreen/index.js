@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import {Container, Content, Text, Spinner, Thumbnail} from 'native-base';
+import {Protect} from '../../componets';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
 export const LoadingScreen = ({navigation}) => {
   return (
     <Container style={styles.container}>
+      <Protect navigation={navigation} />
       <Content>
         <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
           <Thumbnail
@@ -44,8 +45,4 @@ export const LoadingScreen = ({navigation}) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoadingScreen);
+export default LoadingScreen;

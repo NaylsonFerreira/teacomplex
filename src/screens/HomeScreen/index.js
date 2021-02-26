@@ -1,8 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import {StyleSheet} from 'react-native';
 import {Container, Content} from 'native-base';
-import {Header, List} from '../../componets';
+import {Header, List, Protect} from '../../componets';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -14,6 +13,7 @@ const styles = StyleSheet.create({
 export const HomeScreen = ({navigation}) => {
   return (
     <Container style={styles.container}>
+      <Protect navigation={navigation} />
       <Content>
         <Header navigation={navigation} title="TeaComplex" />
         <List />
@@ -22,8 +22,4 @@ export const HomeScreen = ({navigation}) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+export default HomeScreen;

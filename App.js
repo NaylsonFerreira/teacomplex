@@ -32,7 +32,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="SignInScreen"
+        initialRouteName={'LoadingScreen'}
         drawerContent={MenuDrawer}>
         <Drawer.Screen name="MenuDrawer" component={MenuDrawer} />
         <Drawer.Screen name="LoadingScreen" component={LoadingScreen} />

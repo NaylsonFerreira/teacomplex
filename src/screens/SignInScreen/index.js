@@ -1,5 +1,5 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, {useState} from 'react';
+import auth from '@react-native-firebase/auth';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {
   Container,
@@ -13,6 +13,7 @@ import {
   Thumbnail,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {LoginGoogle} from '../../componets';
 
 const styles = StyleSheet.create({
   container: {
@@ -59,6 +60,22 @@ const styles = StyleSheet.create({
 });
 
 export const SignInScreen = ({navigation}) => {
+  const [data, setData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    auth()
+      .signInWithEmailAndPassword(data?.email, data?.password)
+      .then(() => {
+        navigation.navigate('HomeScreen');
+      })
+      .catch((error) => {
+        setMsg('Credenciais inválidas');
+      });
+    setLoading(true);
+  };
   return (
     <Container style={styles.container}>
       <Content>
@@ -72,20 +89,25 @@ export const SignInScreen = ({navigation}) => {
         <Form style={styles.form}>
           <Item floatingLabel>
             <Label>E-mail</Label>
-            <Input />
+            <Input onChange={(value) => setData({...data, email: value})} />
           </Item>
           <Item floatingLabel last>
             <Label>Senha</Label>
-            <Input />
+            <Input onChange={(value) => setData({...data, password: value})} />
           </Item>
+          {msg && <Text style={styles.msg}>{msg}</Text>}
           <Button
             iconLeft
+            disabled={loading}
             style={styles.login_email}
-            onPress={() => navigation.navigate('HomeScreen')}>
+            onPress={() => handleSubmit()}>
             <Icon size={20} color="white" name="envelope" />
             <Text>Entrar com email e senha</Text>
           </Button>
-          <Button iconLeft style={styles.login_google}>
+          <Button
+            iconLeft
+            style={styles.login_google}
+            onPress={() => LoginGoogle()}>
             <Icon size={20} color="white" name="google" />
             <Text>Entrar com conta google</Text>
           </Button>
@@ -98,8 +120,4 @@ export const SignInScreen = ({navigation}) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignInScreen);
+export default SignInScreen;

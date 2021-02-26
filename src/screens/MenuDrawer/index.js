@@ -1,8 +1,8 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container, Content, Text, Button, Thumbnail} from 'native-base';
 import IconMi from 'react-native-vector-icons/MaterialIcons';
+import auth from '@react-native-firebase/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -73,7 +73,11 @@ export const MenuDrawer = ({navigation}) => {
         <Button
           style={{...styles.button, marginTop: 250}}
           full
-          onPress={() => navigation.navigate('LoadingScreen')}>
+          onPress={() =>
+            auth()
+              .signOut()
+              .then(() => navigation.navigate('SignInScreen'))
+          }>
           <IconMi
             name="exit-to-app"
             color="white"
@@ -87,8 +91,4 @@ export const MenuDrawer = ({navigation}) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MenuDrawer);
+export default MenuDrawer;

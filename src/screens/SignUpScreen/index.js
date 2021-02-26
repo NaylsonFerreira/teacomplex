@@ -1,5 +1,5 @@
-import React from 'react';
-import {connect} from 'react-redux';
+import React, {useState} from 'react';
+import auth from '@react-native-firebase/auth';
 import {StyleSheet} from 'react-native';
 import {
   Container,
@@ -55,6 +55,36 @@ const styles = StyleSheet.create({
 });
 
 export const SignUpScreen = ({navigation}) => {
+  const [data, setData] = useState({
+    email: 'naylsonfsa@gmail.com',
+    password: 'overload',
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [msg, setMsg] = useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    if (data?.password === data?.password2 && data?.password?.length > 8) {
+      auth()
+        .createUserWithEmailAndPassword(data?.email, data?.password)
+        .then(() => navigation.navigate('LoadingScreen'))
+        .catch((error) => {
+          if (error.code === 'auth/email-already-in-use') {
+            auth
+              .signInWithEmailAndPassword(data?.email, data?.password)
+              .then(() => navigation.navigate('LoadingScreen'))
+              .catch(() => setMsg('Email já cadastrado'));
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            setMsg('Credenciais inválidas');
+          }
+        });
+    }
+
+    setLoading(true);
+  };
   return (
     <Container style={styles.container}>
       <Header navigation={navigation} back="SignInScreen" />
@@ -73,21 +103,35 @@ export const SignUpScreen = ({navigation}) => {
           </Item>
           <Item floatingLabel>
             <Label>E-mail</Label>
-            <Input />
+            <Input
+              value={data?.email}
+              onChange={(value) => setData({...data, email: value})}
+            />
           </Item>
           <Item floatingLabel last>
             <Label>Senha</Label>
-            <Input />
+            <Input
+              value={data?.password}
+              onChange={(value) => setData({...data, password: value})}
+            />
           </Item>
           <Item floatingLabel last>
             <Label>Repetir a Senha</Label>
-            <Input />
+            <Input
+              value={data?.password2}
+              onChange={(value) => setData({...data, password2: value})}
+            />
           </Item>
-          <Button iconLeft style={styles.login_email}>
+          {msg && <Text style={styles.msg}>{msg}</Text>}
+          <Button
+            disabled={loading}
+            iconLeft
+            style={styles.login_email}
+            onPress={() => handleSubmit()}>
             <Icon size={20} color="white" name="envelope" />
             <Text>Criar uma conta</Text>
           </Button>
-          <Button iconLeft style={styles.login_google}>
+          <Button disabled={loading} iconLeft style={styles.login_google}>
             <Icon size={20} color="white" name="google" />
             <Text>Entrar com conta google</Text>
           </Button>
@@ -97,8 +141,4 @@ export const SignUpScreen = ({navigation}) => {
   );
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpScreen);
+export default SignUpScreen;
