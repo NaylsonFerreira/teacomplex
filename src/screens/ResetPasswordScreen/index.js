@@ -12,14 +12,8 @@ import {
   Thumbnail,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Header} from '../../componets';
 import {AuthContext} from '../../hooks/authContext';
-
-const defaultButton = {
-  borderRadius: 30,
-  marginTop: 20,
-  alignSelf: 'center',
-  width: '100%',
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -43,20 +37,25 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   login_email: {
-    ...defaultButton,
+    borderRadius: 30,
+    marginTop: 30,
+    padding: 20,
+    alignSelf: 'center',
     backgroundColor: '#4285f4',
   },
   login_google: {
-    ...defaultButton,
+    borderRadius: 30,
+    marginTop: 20,
+    padding: 20,
+    alignSelf: 'center',
     backgroundColor: '#ea4335',
   },
   signup: {
-    ...defaultButton,
-    backgroundColor: '#ec3c3c',
-  },
-  reset: {
-    ...defaultButton,
-    backgroundColor: '#5f9b36',
+    marginTop: 30,
+    fontSize: 18,
+    alignSelf: 'center',
+    color: '#4285f4',
+    textDecorationLine: 'underline',
   },
   error: {
     textAlign: 'center',
@@ -65,16 +64,14 @@ const styles = StyleSheet.create({
   },
 });
 
-export const SignInScreen = ({navigation}) => {
-  const {signIn, error} = useContext(AuthContext);
-  const [data, setData] = useState({
-    email: 'naylsonfsa@gmail.com',
-    password: 'overload',
-  });
+export const ResetPasswordScreen = ({navigation}) => {
+  const {resetPassword, error} = useContext(AuthContext);
+  const [email, setEmail] = useState('naylsonfsa@gmail.com');
 
   return (
     <Container style={styles.container}>
       <Content>
+        <Header navigation={navigation} back="SignInScreen" />
         <Thumbnail
           style={styles.logo}
           source={{
@@ -82,43 +79,21 @@ export const SignInScreen = ({navigation}) => {
           }}
         />
         <Form style={styles.form}>
+          <Text style={styles.name}>TeaComplex</Text>
           {error && <Text style={styles.error}>{error}</Text>}
           <Item floatingLabel>
             <Label>E-mail</Label>
             <Input
-              defaultValue={data.email}
-              onChangeText={(value) => setData({...data, email: value})}
-            />
-          </Item>
-          <Item floatingLabel last>
-            <Label>Senha</Label>
-            <Input
-              defaultValue={data.password}
-              onChangeText={(value) => setData({...data, password: value})}
+              defaultValue={email}
+              onChangeText={(value) => setEmail(value)}
             />
           </Item>
           <Button
             iconLeft
-            full
             style={styles.login_email}
-            onPress={() => signIn(data)}>
+            onPress={() => resetPassword(email)}>
             <Icon size={20} color="white" name="envelope" />
-            <Text>Entrar com email e senha</Text>
-          </Button>
-          <Button
-            full
-            style={styles.signup}
-            onPress={() => navigation.navigate('SignUpScreen')}>
-            <Icon size={20} color="white" name="user-plus" />
-            <Text>Criar uma conta</Text>
-          </Button>
-
-          <Button
-            full
-            style={styles.reset}
-            onPress={() => navigation.navigate('ResetPasswordScreen')}>
-            <Icon size={20} color="white" name="unlock-alt" />
-            <Text>Esqueci minha senha</Text>
+            <Text>Enviar link de recuperação</Text>
           </Button>
         </Form>
       </Content>
@@ -126,4 +101,4 @@ export const SignInScreen = ({navigation}) => {
   );
 };
 
-export default SignInScreen;
+export default ResetPasswordScreen;

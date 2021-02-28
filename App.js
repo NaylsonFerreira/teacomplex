@@ -12,6 +12,7 @@ import {
   SignUpScreen,
   SignInScreen,
   LoadingScreen,
+  ResetPasswordScreen,
 } from './src/screens';
 
 const Drawer = createDrawerNavigator();
@@ -43,6 +44,10 @@ export default function App() {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+        <Stack.Screen
+          name="ResetPasswordScreen"
+          component={ResetPasswordScreen}
+        />
       </Stack.Navigator>
     );
   }

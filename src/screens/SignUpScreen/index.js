@@ -38,19 +38,13 @@ const styles = StyleSheet.create({
     padding: 10,
     alignSelf: 'center',
   },
-  login_google: {
-    borderRadius: 30,
-    marginTop: 20,
-    padding: 20,
-    alignSelf: 'center',
-    backgroundColor: '#ea4335',
-  },
   login_email: {
     borderRadius: 30,
     marginTop: 30,
     padding: 20,
     alignSelf: 'center',
     backgroundColor: '#4285f4',
+    width: '100%',
   },
   error: {
     textAlign: 'center',
@@ -101,17 +95,10 @@ export const SignUpScreen = ({navigation}) => {
               onChangeText={(value) => setData({...data, password2: value})}
             />
           </Item>
-          <Button
-            iconLeft
-            style={styles.login_email}
-            onPress={() => signUp(data)}>
+          <Button full style={styles.login_email} onPress={() => signUp(data)}>
             <Icon size={20} color="white" name="envelope" />
             <Text>Criar uma conta</Text>
           </Button>
-          {/* <Button iconLeft style={styles.login_google}>
-              <Icon size={20} color="white" name="google" />
-              <Text>Entrar com conta google</Text>
-            </Button> */}
         </Form>
       </Content>
     </Container>

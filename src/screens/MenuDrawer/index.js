@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   },
   logout: {
     width: 350,
+    marginTop: 10,
     backgroundColor: '#4285f4',
-    marginTop: 250,
   },
 });
 
@@ -54,13 +54,6 @@ export const MenuDrawer = ({navigation, signOut}) => {
           onPress={() => navigation.navigate('HomeScreen')}>
           <IconMi name="face" color="white" size={30} style={styles.icon} />
           <Text style={styles.name}>Meu Perfil</Text>
-        </Button>
-        <Button
-          style={styles.button}
-          full
-          onPress={() => navigation.navigate('HomeScreen')}>
-          <IconMi name="list" color="white" size={30} style={styles.icon} />
-          <Text style={styles.name}>Lista de embriões</Text>
         </Button>
         <Button
           style={styles.button}

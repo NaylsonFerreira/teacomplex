@@ -1,66 +1,61 @@
 import React, {useReducer, useEffect, useMemo, createContext} from 'react';
-import auth from '@react-native-firebase/auth';
+import auth, {firebase} from '@react-native-firebase/auth';
+
+firebase.auth().setLanguageCode('pt-br');
+
+const initialState = {
+  loading: false,
+  anonymous: true,
+  error: false,
+  userToken: null,
+  user: {
+    displayName: null,
+    email: '',
+    emailVerified: false,
+    isAnonymous: false,
+    metadata: [],
+    phoneNumber: null,
+    photoURL: null,
+    providerData: [],
+    providerId: '',
+    uid: '',
+  },
+};
 
 const AuthContext = createContext();
 
 const AuthProvider = ({children}) => {
-  const [state, dispatch] = useReducer(
-    (prevState, action) => {
-      switch (action.type) {
-        case 'RESTORE_TOKEN':
-          return {
-            ...prevState,
-            userToken: action.token,
-            isLoading: false,
-          };
-        case 'SIGN_IN_SUCESS':
-          return {
-            ...prevState,
-            anonymous: false,
-            user: action.user,
-            loading: false,
-          };
-        case 'SIGN_IN_ERROR':
-          return {
-            ...prevState,
-            anonymous: true,
-            error: action.error,
-            user: {},
-            loading: false,
-          };
-        case 'SIGN_OUT':
-          return {
-            ...prevState,
-            anonymous: true,
-            userToken: null,
-            user: {},
-            loading: false,
-          };
-        case 'LOADING':
-          return {
-            ...prevState,
-            loading: true,
-          };
-      }
-    },
-    {
-      loading: false,
-      anonymous: true,
-      userToken: null,
-      user: {
-        displayName: null,
-        email: '',
-        emailVerified: false,
-        isAnonymous: false,
-        metadata: [],
-        phoneNumber: null,
-        photoURL: null,
-        providerData: [],
-        providerId: '',
-        uid: '',
-      },
-    },
-  );
+  const [state, dispatch] = useReducer((prevState, action) => {
+    switch (action.type) {
+      case 'SIGN_IN_SUCESS':
+        return {
+          ...prevState,
+          user: action.user,
+          error: false,
+          loading: false,
+          anonymous: false,
+        };
+      case 'SIGN_IN_ERROR':
+        return {
+          ...initialState,
+          error: action.error,
+        };
+      case 'SIGN_OUT':
+        return initialState;
+      case 'LOADING':
+        return {
+          ...prevState,
+          loading: true,
+        };
+      case 'ERROR':
+        return {
+          ...prevState,
+          error: action.error,
+          loading: false,
+        };
+    }
+  }, initialState);
+
   function onAuthStateChanged(user) {
     if (user) {
       dispatch({type: 'SIGN_IN_SUCESS', user});
@@ -101,13 +96,38 @@ const AuthProvider = ({children}) => {
           .then(() => dispatch({type: 'SIGN_OUT'}));
       },
 
+      resetPassword: async (email) => {
+        dispatch({type: 'LOADING'});
+        if (email) {
+          auth()
+            .sendPasswordResetEmail(email)
+            .then(() =>
+              dispatch({
+                type: 'ERROR',
+                error: 'Enviamos instruções para seu email',
+              }),
+            )
+            .catch(() =>
+              dispatch({
+                type: 'ERROR',
+                error: 'Email inválido',
+              }),
+            );
+        } else {
+          dispatch({
+            type: 'ERROR',
+            error: 'Digite um email inválido',
+          });
+        }
+      },
+
       signUp: async (data) => {
         dispatch({type: 'LOADING'});
         if (data?.password === data?.password2 && data?.password?.length >= 8) {
           auth()
             .createUserWithEmailAndPassword(data.email, data.password)
-            .then((response) => {
-              dispatch({type: 'SIGN_IN_SUCESS', user: response});
+            .then(({user}) => {
+              dispatch({type: 'SIGN_IN_SUCESS', user});
             })
             .catch((error) => {
               console.log(error);
