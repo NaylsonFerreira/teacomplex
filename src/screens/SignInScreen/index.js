@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 });
 
 export const SignInScreen = ({navigation}) => {
-  const {signIn, user, error, loading} = useContext(AuthContext);
+  const {signIn, error} = useContext(AuthContext);
   const [data, setData] = useState({
     email: 'naylsonfsa@gmail.com',
     password: 'overload',
@@ -80,43 +80,37 @@ export const SignInScreen = ({navigation}) => {
             uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
           }}
         />
-        {loading ? (
-          <Spinner size={60} color="blue" />
-        ) : (
-          <Form style={styles.form}>
-            {error && <Text style={styles.error}>{error}</Text>}
-            <Item floatingLabel>
-              <Label>E-mail</Label>
-              <Input
-                defaultValue={data.email}
-                onChangeText={(value) => setData({...data, email: value})}
-              />
-            </Item>
-            <Item floatingLabel last>
-              <Label>Senha</Label>
-              <Input
-                defaultValue={data.password}
-                onChangeText={(value) => setData({...data, password: value})}
-              />
-            </Item>
-            <Button
-              iconLeft
-              disabled={loading}
-              style={styles.login_email}
-              onPress={() => signIn(data)}>
-              <Icon size={20} color="white" name="envelope" />
-              <Text>Entrar com email e senha</Text>
-            </Button>
-            {/* <Button iconLeft style={styles.login_google} onPress={() => {}}>
+        <Form style={styles.form}>
+          {error && <Text style={styles.error}>{error}</Text>}
+          <Item floatingLabel>
+            <Label>E-mail</Label>
+            <Input
+              defaultValue={data.email}
+              onChangeText={(value) => setData({...data, email: value})}
+            />
+          </Item>
+          <Item floatingLabel last>
+            <Label>Senha</Label>
+            <Input
+              defaultValue={data.password}
+              onChangeText={(value) => setData({...data, password: value})}
+            />
+          </Item>
+          <Button
+            iconLeft
+            style={styles.login_email}
+            onPress={() => signIn(data)}>
+            <Icon size={20} color="white" name="envelope" />
+            <Text>Entrar com email e senha</Text>
+          </Button>
+          {/* <Button iconLeft style={styles.login_google} onPress={() => {}}>
               <Icon size={20} color="white" name="google" />
               <Text>Entrar com conta google</Text>
             </Button> */}
-            <TouchableOpacity
-              onPress={() => navigation.navigate('SignUpScreen')}>
-              <Text style={styles.signup}>{user.email}Criar uma conta</Text>
-            </TouchableOpacity>
-          </Form>
-        )}
+          <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
+            <Text style={styles.signup}>Criar uma conta</Text>
+          </TouchableOpacity>
+        </Form>
       </Content>
     </Container>
   );

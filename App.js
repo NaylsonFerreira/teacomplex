@@ -11,6 +11,7 @@ import {
   MenuDrawer,
   SignUpScreen,
   SignInScreen,
+  LoadingScreen,
 } from './src/screens';
 
 const Drawer = createDrawerNavigator();
@@ -30,7 +31,11 @@ export default function App() {
     messaging().setBackgroundMessageHandler(onMessageReceived);
   }, []);
 
-  const {anonymous, signOut} = useContext(AuthContext);
+  const {anonymous, signOut, loading} = useContext(AuthContext);
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
 
   if (anonymous) {
     enableScreens();

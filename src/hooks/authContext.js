@@ -83,7 +83,8 @@ const AuthProvider = ({children}) => {
               dispatch({type: 'SIGN_IN_SUCESS', user: response});
             })
             .catch((error) => {
-              dispatch({type: 'SIGN_IN_ERROR', error});
+              console.log(error);
+              dispatch({type: 'SIGN_IN_ERROR', error: 'Credenciais inválidas'});
             });
         } else {
           dispatch({
@@ -101,7 +102,42 @@ const AuthProvider = ({children}) => {
       },
 
       signUp: async (data) => {
-        dispatch({type: 'SIGN_IN', token: 'dummy-auth-token'});
+        dispatch({type: 'LOADING'});
+        if (data?.password === data?.password2 && data?.password?.length >= 8) {
+          auth()
+            .createUserWithEmailAndPassword(data.email, data.password)
+            .then((response) => {
+              dispatch({type: 'SIGN_IN_SUCESS', user: response});
+            })
+            .catch((error) => {
+              console.log(error);
+              if (error.code === 'auth/email-already-in-use') {
+                dispatch({
+                  type: 'SIGN_IN_ERROR',
+                  error: 'Esse e-mail já foi cadastrado',
+                });
+              }
+
+              if (error.code === 'auth/invalid-email') {
+                dispatch({
+                  type: 'SIGN_IN_ERROR',
+                  error: 'Credenciais inválidas',
+                });
+              }
+            });
+        } else {
+          if (data?.password?.length < 8) {
+            dispatch({
+              type: 'SIGN_IN_ERROR',
+              error: 'A senha muito curta',
+            });
+          } else {
+            dispatch({
+              type: 'SIGN_IN_ERROR',
+              error: 'Preencha os campos corretamente',
+            });
+          }
+        }
       },
     }),
     [],
