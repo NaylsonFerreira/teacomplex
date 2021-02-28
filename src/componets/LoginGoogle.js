@@ -31,10 +31,8 @@ const LoginGoogle = async () => {
   if (user?.hasPlayServices) {
     try {
       const data = await GoogleSignin.signIn();
-      console.log(data);
       user.googleToken = data.idToken;
     } catch (error) {
-      console.log(error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         user.error = 'user cancelled the login flow';
       } else if (error.code === statusCodes.IN_PROGRESS) {

@@ -1,7 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import {Container, Content, Text, Spinner, Thumbnail} from 'native-base';
-import {Protect} from '../../componets';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,12 +24,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export const LoadingScreen = ({navigation}) => {
+export const LoadingScreen = () => {
   return (
     <Container style={styles.container}>
-      <Protect navigation={navigation} />
       <Content>
-        <TouchableOpacity onPress={() => navigation.navigate('SignInScreen')}>
+        <TouchableOpacity>
           <Thumbnail
             style={styles.logo}
             source={{

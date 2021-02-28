@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import auth from '@react-native-firebase/auth';
+import React, {useState, useContext} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {
   Container,
@@ -14,7 +13,7 @@ import {
   Spinner,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {LoginGoogle} from '../../componets';
+import {AuthContext} from '../../hooks/authContext';
 
 const styles = StyleSheet.create({
   container: {
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
     color: '#4285f4',
     textDecorationLine: 'underline',
   },
-  msg: {
+  error: {
     textAlign: 'center',
     fontSize: 20,
     color: 'red',
@@ -66,27 +65,12 @@ const styles = StyleSheet.create({
 });
 
 export const SignInScreen = ({navigation}) => {
+  const {signIn, user, error, loading} = useContext(AuthContext);
   const [data, setData] = useState({
     email: 'naylsonfsa@gmail.com',
     password: 'overload',
   });
-  const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState(false);
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    if (data?.email && data?.password) {
-      auth()
-        .signInWithEmailAndPassword(data.email, data.password)
-        .then(() => {
-          navigation.navigate('HomeScreen');
-        })
-        .catch((error) => {
-          setMsg('Credenciais inválidas');
-        });
-    }
-    setLoading(false);
-  };
   return (
     <Container style={styles.container}>
       <Content>
@@ -96,12 +80,11 @@ export const SignInScreen = ({navigation}) => {
             uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
           }}
         />
-        <Text style={styles.name}>TeaComplex</Text>
         {loading ? (
           <Spinner size={60} color="blue" />
         ) : (
           <Form style={styles.form}>
-            {msg && <Text style={styles.msg}>{msg}</Text>}
+            {error && <Text style={styles.error}>{error}</Text>}
             <Item floatingLabel>
               <Label>E-mail</Label>
               <Input
@@ -120,7 +103,7 @@ export const SignInScreen = ({navigation}) => {
               iconLeft
               disabled={loading}
               style={styles.login_email}
-              onPress={() => handleSubmit()}>
+              onPress={() => signIn(data)}>
               <Icon size={20} color="white" name="envelope" />
               <Text>Entrar com email e senha</Text>
             </Button>
@@ -130,7 +113,7 @@ export const SignInScreen = ({navigation}) => {
             </Button> */}
             <TouchableOpacity
               onPress={() => navigation.navigate('SignUpScreen')}>
-              <Text style={styles.signup}>Criar uma conta</Text>
+              <Text style={styles.signup}>{user.email}Criar uma conta</Text>
             </TouchableOpacity>
           </Form>
         )}

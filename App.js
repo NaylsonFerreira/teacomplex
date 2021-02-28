@@ -1,19 +1,20 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from 'react-native-screens/native-stack';
+import {enableScreens} from 'react-native-screens';
 import messaging from '@react-native-firebase/messaging';
 import {Alert} from 'react-native';
+import {AuthContext} from './src/hooks/authContext';
 
 import {
   HomeScreen,
-  DrawerScreen,
   MenuDrawer,
-  LoadingScreen,
   SignUpScreen,
   SignInScreen,
 } from './src/screens';
 
 const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const onMessageReceived = (remoteMessage) => {
@@ -29,18 +30,21 @@ export default function App() {
     messaging().setBackgroundMessageHandler(onMessageReceived);
   }, []);
 
+  const {anonymous, signOut} = useContext(AuthContext);
+
+  if (anonymous) {
+    enableScreens();
+    return (
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="SignInScreen" component={SignInScreen} />
+        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+      </Stack.Navigator>
+    );
+  }
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName={'LoadingScreen'}
-        drawerContent={MenuDrawer}>
-        <Drawer.Screen name="MenuDrawer" component={MenuDrawer} />
-        <Drawer.Screen name="LoadingScreen" component={LoadingScreen} />
-        <Drawer.Screen name="SignInScreen" component={SignInScreen} />
-        <Drawer.Screen name="SignUpScreen" component={SignUpScreen} />
-        <Drawer.Screen name="HomeScreen" component={HomeScreen} />
-        <Drawer.Screen name="DrawerScreen" component={DrawerScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Drawer.Navigator
+      drawerContent={(props) => MenuDrawer({...props, signOut})}>
+      <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+    </Drawer.Navigator>
   );
 }

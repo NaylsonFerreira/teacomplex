@@ -1,8 +1,7 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Container, Content, Text, Button, Thumbnail} from 'native-base';
 import IconMi from 'react-native-vector-icons/MaterialIcons';
-import auth from '@react-native-firebase/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,9 +23,14 @@ const styles = StyleSheet.create({
     width: 350,
     backgroundColor: '#4285f4',
   },
+  logout: {
+    width: 350,
+    backgroundColor: '#4285f4',
+    marginTop: 250,
+  },
 });
 
-export const MenuDrawer = ({navigation}) => {
+export const MenuDrawer = ({navigation, signOut}) => {
   return (
     <Container style={styles.container}>
       <Thumbnail
@@ -70,14 +74,7 @@ export const MenuDrawer = ({navigation}) => {
           />
           <Text style={styles.name}>Notificações</Text>
         </Button>
-        <Button
-          style={{...styles.button, marginTop: 250}}
-          full
-          onPress={() =>
-            auth()
-              .signOut()
-              .then(() => navigation.navigate('SignInScreen'))
-          }>
+        <Button style={styles.logout} full onPress={() => signOut()}>
           <IconMi
             name="exit-to-app"
             color="white"
