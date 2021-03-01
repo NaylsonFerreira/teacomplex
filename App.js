@@ -13,6 +13,7 @@ import {
   SignInScreen,
   LoadingScreen,
   ResetPasswordScreen,
+  ProfileScreen,
 } from './src/screens';
 
 const Drawer = createDrawerNavigator();
@@ -55,6 +56,7 @@ export default function App() {
     <Drawer.Navigator
       drawerContent={(props) => MenuDrawer({...props, signOut})}>
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+      <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
     </Drawer.Navigator>
   );
 }

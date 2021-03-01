@@ -44,14 +44,14 @@ export const MenuDrawer = ({navigation, signOut}) => {
         <Button
           style={styles.button}
           full
-          onPress={() => navigation.navigate('LoadingScreen')}>
+          onPress={() => navigation.navigate('HomeScreen')}>
           <IconMi name="home" color="white" size={30} style={styles.icon} />
           <Text style={styles.name}>Início</Text>
         </Button>
         <Button
           style={styles.button}
           full
-          onPress={() => navigation.navigate('HomeScreen')}>
+          onPress={() => navigation.navigate('ProfileScreen')}>
           <IconMi name="face" color="white" size={30} style={styles.icon} />
           <Text style={styles.name}>Meu Perfil</Text>
         </Button>

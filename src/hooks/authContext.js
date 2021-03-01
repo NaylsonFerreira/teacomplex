@@ -12,11 +12,8 @@ const initialState = {
     displayName: null,
     email: '',
     emailVerified: false,
-    isAnonymous: false,
-    metadata: [],
     phoneNumber: null,
     photoURL: null,
-    providerData: [],
     providerId: '',
     uid: '',
   },
@@ -53,6 +50,12 @@ const AuthProvider = ({children}) => {
           error: action.error,
           loading: false,
         };
+      case 'UPDATE_USER':
+        return {
+          ...prevState,
+          user: action.user,
+          loading: false,
+        };
     }
   }, initialState);
 
@@ -78,7 +81,6 @@ const AuthProvider = ({children}) => {
               dispatch({type: 'SIGN_IN_SUCESS', user: response});
             })
             .catch((error) => {
-              console.log(error);
               dispatch({type: 'SIGN_IN_ERROR', error: 'Credenciais inválidas'});
             });
         } else {
@@ -130,7 +132,6 @@ const AuthProvider = ({children}) => {
               dispatch({type: 'SIGN_IN_SUCESS', user});
             })
             .catch((error) => {
-              console.log(error);
               if (error.code === 'auth/email-already-in-use') {
                 dispatch({
                   type: 'SIGN_IN_ERROR',
@@ -159,6 +160,7 @@ const AuthProvider = ({children}) => {
           }
         }
       },
+      updateUser: (data) => dispatch({type: 'UPDATE_USER', user: data}),
     }),
     [],
   );

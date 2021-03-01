@@ -18,7 +18,7 @@ export const HomeScreen = ({navigation, route}) => {
     <Container style={styles.container}>
       <Content>
         <Header navigation={navigation} title="TeaComplex" />
-        <Text>{user.email || 'Faça login para continuar'}</Text>
+        <Text>{user?.email || 'Faça login para continuar'}</Text>
         <List />
       </Content>
     </Container>
