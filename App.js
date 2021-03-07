@@ -33,13 +33,13 @@ export default function App() {
     messaging().setBackgroundMessageHandler(onMessageReceived);
   }, []);
 
-  const {anonymous, signOut, loading} = useContext(AuthContext);
+  const {token, signOut, loading} = useContext(AuthContext);
 
   if (loading) {
     return <LoadingScreen />;
   }
 
-  if (anonymous) {
+  if (!token) {
     enableScreens();
     return (
       <Stack.Navigator screenOptions={{headerShown: false}}>

@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
 });
 
 export const SignInScreen = ({navigation}) => {
-  const {signIn, error} = useContext(AuthContext);
+  const {signIn, resetPassword, error} = useContext(AuthContext);
   const [data, setData] = useState({
-    email: 'naylsonfsa@gmail.com',
+    email: 'userteste@gmail.com',
     password: 'overload',
   });
 
@@ -113,10 +113,7 @@ export const SignInScreen = ({navigation}) => {
             <Text>Criar uma conta</Text>
           </Button>
 
-          <Button
-            full
-            style={styles.reset}
-            onPress={() => navigation.navigate('ResetPasswordScreen')}>
+          <Button full style={styles.reset} onPress={() => resetPassword()}>
             <Icon size={20} color="white" name="unlock-alt" />
             <Text>Esqueci minha senha</Text>
           </Button>
