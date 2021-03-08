@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container, Content, Text} from 'native-base';
 import {Header, List} from '../../componets';
@@ -12,14 +12,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export const HomeScreen = ({navigation, route}) => {
-  const {user} = useContext(AuthContext);
+export const HomeScreen = ({navigation}) => {
+  const {listaJogos, loadAllGames} = useContext(AuthContext);
+  useEffect(() => {
+    return loadAllGames();
+  }, [loadAllGames]);
   return (
     <Container style={styles.container}>
       <Content>
         <Header navigation={navigation} title="TeaComplex" />
-        <Text>{user?.email || 'Faça login para continuar'}</Text>
-        <List />
+        <List lista={listaJogos} />
       </Content>
     </Container>
   );

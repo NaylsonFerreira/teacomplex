@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Linking, Alert} from 'react-native';
 import {
   Text,
   List,
@@ -9,7 +9,6 @@ import {
   Body,
   Right,
   Button,
-  Separator,
 } from 'native-base';
 const styles = StyleSheet.create({
   left: {
@@ -35,18 +34,28 @@ const ItemAvatar = (props) => {
           style={styles.imagen}
           square
           source={{
-            uri: 'https://overloadlab.com.br/pcomplex/static/logo2.png',
+            uri: props.icon,
           }}
         />
       </Left>
       <Body style={styles.body}>
-        <Text>Khunters</Text>
+        <Text>{props.nome?.split('_').join(' ')}</Text>
         <Text note numberOfLines={2}>
           Faça amigos e divirta-se
         </Text>
       </Body>
       <Right>
-        <Button transparent>
+        <Button
+          transparent
+          onPress={async () => {
+            const url = props.link;
+            const supported = await Linking.canOpenURL(url);
+            if (supported) {
+              await Linking.openURL(url);
+            } else {
+              Alert.alert(`Acesse: ${url}`);
+            }
+          }}>
           <Text>Jogar</Text>
         </Button>
       </Right>
@@ -54,22 +63,11 @@ const ItemAvatar = (props) => {
   );
 };
 
-const Lista = (props) => {
+const Lista = ({lista}) => {
   const itens = [];
-  for (let i = 1; i < 5; i++) {
-    itens.push(<ItemAvatar index={i} key={i} />);
-  }
-  return (
-    <List style={styles.lista}>
-      <Separator bordered>
-        <Text style={styles.separator}>Jogos de Aventura</Text>
-      </Separator>
-      {itens}
-      <Separator bordered>
-        <Text style={styles.separator}>Jogos de Corrida</Text>
-      </Separator>
-      {itens}
-    </List>
-  );
+  lista.forEach((props) => {
+    itens.push(<ItemAvatar {...props} key={props.id} />);
+  });
+  return <List style={styles.lista}>{itens}</List>;
 };
 export default Lista;

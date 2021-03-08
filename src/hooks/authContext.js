@@ -21,6 +21,7 @@ const initialState = {
     genero: '',
     user: '',
   },
+  listaJogos: [],
 };
 
 const AuthContext = createContext();
@@ -60,14 +61,25 @@ const AuthProvider = ({children}) => {
           loading: false,
           user: action.user,
         };
+      case 'LOAD_ALL_GAMES':
+        return {
+          ...prevState,
+          error: false,
+          loading: false,
+          listaJogos: action.listaJogos,
+        };
     }
   }, initialState);
 
-  const getMe = () => {
+  const getMe = async () => {
     dispatch({type: 'LOADING'});
-    api.get('me/').then(function ({data}) {
-      dispatch({type: 'UPDATE_USER', user: data});
-    });
+    setTimeout(
+      () =>
+        api.get('me/').then(function ({data}) {
+          dispatch({type: 'UPDATE_USER', user: data});
+        }),
+      3000,
+    );
   };
 
   useEffect(() => {

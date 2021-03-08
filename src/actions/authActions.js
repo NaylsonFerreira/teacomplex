@@ -130,6 +130,18 @@ export const authActions = (dispatch) => {
         }
       });
     },
+    loadAllGames: () => {
+      api.get(`api/jogo/`).then(function ({status, data}) {
+        if (status === 200) {
+          dispatch({type: 'LOAD_ALL_GAMES', listaJogos: data});
+        } else {
+          dispatch({
+            type: 'ERROR',
+            error: data.error || 'Falha ao carregar os jogos',
+          });
+        }
+      });
+    },
   };
 };
 export default authActions;
