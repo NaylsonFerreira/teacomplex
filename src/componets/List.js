@@ -26,6 +26,15 @@ const styles = StyleSheet.create({
   item: {},
 });
 
+const handleApp = ({link}) => {
+  const supported = Linking.canOpenURL(link);
+  if (supported) {
+    Linking.openURL(link);
+  } else {
+    Alert.alert(`Acesse: ${link}`);
+  }
+};
+
 const ItemAvatar = (props) => {
   return (
     <ListItem thumbnail style={styles.item}>
@@ -45,17 +54,7 @@ const ItemAvatar = (props) => {
         </Text>
       </Body>
       <Right>
-        <Button
-          transparent
-          onPress={async () => {
-            const url = props.link;
-            const supported = await Linking.canOpenURL(url);
-            if (supported) {
-              await Linking.openURL(url);
-            } else {
-              Alert.alert(`Acesse: ${url}`);
-            }
-          }}>
+        <Button transparent onPress={() => handleApp(props)}>
           <Text>Jogar</Text>
         </Button>
       </Right>

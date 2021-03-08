@@ -73,13 +73,9 @@ const AuthProvider = ({children}) => {
 
   const getMe = async () => {
     dispatch({type: 'LOADING'});
-    setTimeout(
-      () =>
-        api.get('me/').then(function ({data}) {
-          dispatch({type: 'UPDATE_USER', user: data});
-        }),
-      3000,
-    );
+    api.get('me/').then(function ({data}) {
+      dispatch({type: 'UPDATE_USER', user: data});
+    });
   };
 
   useEffect(() => {
@@ -88,7 +84,7 @@ const AuthProvider = ({children}) => {
       if (token) {
         http.defaults.headers.common.Authorization = `Token ${token}`;
         dispatch({type: 'SIGN_IN_SUCESS', token});
-        getMe();
+        setTimeout(() => getMe(), 2000);
       } else {
         dispatch({
           type: 'SIGN_IN_ERROR',

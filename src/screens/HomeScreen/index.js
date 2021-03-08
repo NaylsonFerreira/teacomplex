@@ -13,14 +13,17 @@ const styles = StyleSheet.create({
 });
 
 export const HomeScreen = ({navigation}) => {
-  const {listaJogos, loadAllGames} = useContext(AuthContext);
+  const {listaJogos, token, error, loadAllGames} = useContext(AuthContext);
   useEffect(() => {
-    return loadAllGames();
-  }, [loadAllGames]);
+    if (token) {
+      loadAllGames();
+    }
+  }, [loadAllGames, token]);
   return (
     <Container style={styles.container}>
       <Content>
         <Header navigation={navigation} title="TeaComplex" />
+        {error && <Text style={styles.error}>{error}</Text>}
         <List lista={listaJogos} />
       </Content>
     </Container>
