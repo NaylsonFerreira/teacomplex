@@ -109,6 +109,27 @@ export const authActions = (dispatch) => {
         Alert.alert(`Para recuperar sua senha acesse: ${url}`);
       }
     },
+    updateUser: ({id, ...profile}) => {
+      dispatch({type: 'LOADING'});
+      api.put(`api/profile/${id}/`, profile).then(function ({status, data}) {
+        switch (status) {
+          case 200:
+            dispatch({type: 'UPDATE_USER', user: data});
+            break;
+          case 400:
+            dispatch({
+              type: 'ERROR',
+              error: data.error || 'Falha ao salvar',
+            });
+            break;
+          default:
+            dispatch({
+              type: 'ERROR',
+              error: 'Error desconhecido',
+            });
+        }
+      });
+    },
   };
 };
 export default authActions;

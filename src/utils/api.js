@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-export const baseURL = 'http://192.168.100.5:8080/';
-const http = axios.create({
+export const baseURL = 'https://pcomplex.herokuapp.com/';
+// export const baseURL = 'http://192.168.100.5:8080/';
+
+export const http = axios.create({
   baseURL,
   headers: {'Content-Type': 'application/json'},
 });
@@ -36,7 +38,7 @@ export const api = {
 
   put: async (url, body = {}) => {
     await http
-      .post(url, body)
+      .put(url, body)
       .then(function ({status, data}) {
         result = {status, data};
       })

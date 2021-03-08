@@ -1,12 +1,26 @@
 import React, {useReducer, useEffect, useMemo, createContext} from 'react';
 import {authActions} from '../actions/authActions';
 import {getToken} from '../utils';
+import {api, http} from '../utils/api';
 
 const initialState = {
   loading: false,
   error: false,
   token: null,
-  user: {},
+  user: {
+    id: '',
+    email: '',
+    nome: '',
+    cpf: '',
+    apelido: '',
+    foto: '',
+    sobre: '',
+    whatsapp: '',
+    instagram: '',
+    idade: '',
+    genero: '',
+    user: '',
+  },
 };
 
 const AuthContext = createContext();
@@ -39,14 +53,30 @@ const AuthProvider = ({children}) => {
           error: action.error,
           loading: false,
         };
+      case 'UPDATE_USER':
+        return {
+          ...prevState,
+          error: false,
+          loading: false,
+          user: action.user,
+        };
     }
   }, initialState);
+
+  const getMe = () => {
+    dispatch({type: 'LOADING'});
+    api.get('me/').then(function ({data}) {
+      dispatch({type: 'UPDATE_USER', user: data});
+    });
+  };
 
   useEffect(() => {
     const bootstrapAsync = async () => {
       const token = await getToken();
       if (token) {
+        http.defaults.headers.common.Authorization = `Token ${token}`;
         dispatch({type: 'SIGN_IN_SUCESS', token});
+        getMe();
       } else {
         dispatch({
           type: 'SIGN_IN_ERROR',
