@@ -1,8 +1,9 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container, Content, Text} from 'native-base';
 import {Header, List} from '../../componets';
 import {AuthContext} from '../../hooks/authContext';
+import {LoadingScreen} from '../LoadingScreen';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,12 +14,11 @@ const styles = StyleSheet.create({
 });
 
 export const HomeScreen = ({navigation}) => {
-  const {listaJogos, token, error, loadAllGames} = useContext(AuthContext);
-  useEffect(() => {
-    if (token) {
-      loadAllGames();
-    }
-  }, [loadAllGames, token]);
+  const {listaJogos, error, loadAllGames} = useContext(AuthContext);
+  if (!listaJogos.length) {
+    loadAllGames();
+    return <LoadingScreen />;
+  }
   return (
     <Container style={styles.container}>
       <Content>

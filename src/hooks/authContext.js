@@ -1,6 +1,6 @@
 import React, {useReducer, useEffect, useMemo, createContext} from 'react';
 import {authActions} from '../actions/authActions';
-import {getToken} from '../utils';
+import {getToken, setToken} from '../utils';
 import {api, http} from '../utils/api';
 
 const initialState = {
@@ -71,21 +71,20 @@ const AuthProvider = ({children}) => {
     }
   }, initialState);
 
-  const getMe = async () => {
-    dispatch({type: 'LOADING'});
-    api.get('me/').then(function ({data}) {
-      dispatch({type: 'UPDATE_USER', user: data});
-    });
-  };
-
   useEffect(() => {
     const bootstrapAsync = async () => {
+      dispatch({type: 'LOADING'});
       const token = await getToken();
       if (token) {
         http.defaults.headers.common.Authorization = `Token ${token}`;
+      }
+
+      const {status, data} = await api.get('me/');
+      if (status === 200) {
         dispatch({type: 'SIGN_IN_SUCESS', token});
-        setTimeout(() => getMe(), 2000);
+        dispatch({type: 'UPDATE_USER', user: data});
       } else {
+        await setToken();
         dispatch({
           type: 'SIGN_IN_ERROR',
           error: 'Faça login para continuar',

@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from './api';
 
-const setToken = async (token) => {
+const setToken = async (token = '') => {
   try {
     await AsyncStorage.setItem('TEA-token', token);
   } catch (e) {
