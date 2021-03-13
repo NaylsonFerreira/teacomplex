@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 export const HomeScreen = ({navigation}) => {
   const {listaJogos, error, loadAllGames} = useContext(AuthContext);
   if (!listaJogos.length) {
-    loadAllGames();
+    setTimeout(() => loadAllGames(), 3000);
     return <LoadingScreen />;
   }
   return (

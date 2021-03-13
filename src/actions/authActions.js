@@ -48,7 +48,7 @@ export const authActions = (dispatch) => {
 
     signOut: async () => {
       dispatch({type: 'LOADING'});
-      await setToken('');
+      await setToken();
       dispatch({type: 'SIGN_OUT'});
     },
 

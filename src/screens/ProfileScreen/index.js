@@ -8,15 +8,26 @@ import {
   Label,
   Button,
   Text,
+  ListItem,
+  Radio,
+  Left,
+  Right,
 } from 'native-base';
 import {AuthContext} from '../../hooks/authContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Header} from '../../componets';
 import {useState} from 'react';
+import {StyleSheet} from 'react-native';
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#4285f4',
+  },
+});
 
 export const ProfileScreen = ({navigation}) => {
   const {user, updateUser, error} = useContext(AuthContext);
-  const [data, setData] = useState({});
+  const [data, setData] = useState({genero: user.genero});
 
   return (
     <Container>
@@ -54,13 +65,22 @@ export const ProfileScreen = ({navigation}) => {
               onChangeText={(text) => setData({...data, instagram: text})}
             />
           </Item>
-          <Item stackedLabel last>
-            <Label>Genero</Label>
-            <Input
-              defaultValue={user?.genero}
-              onChangeText={(text) => setData({...data, genero: text})}
-            />
-          </Item>
+          <ListItem onPress={() => setData({...data, genero: 'M'})}>
+            <Left>
+              <Text>Sou menino</Text>
+            </Left>
+            <Right>
+              <Radio selected={data?.genero === 'M'} />
+            </Right>
+          </ListItem>
+          <ListItem onPress={() => setData({...data, genero: 'F'})}>
+            <Left>
+              <Text>Sou menina</Text>
+            </Left>
+            <Right>
+              <Radio selected={data.genero === 'F'} />
+            </Right>
+          </ListItem>
           <Item stackedLabel>
             <Label>Escreva algo sobre você</Label>
             <Input
@@ -68,7 +88,10 @@ export const ProfileScreen = ({navigation}) => {
               onChangeText={(text) => setData({...data, sobre: text})}
             />
           </Item>
-          <Button full onPress={() => updateUser({...user, ...data})}>
+          <Button
+            style={styles.button}
+            full
+            onPress={() => updateUser({...user, ...data})}>
             <Icon size={20} color="white" name="save" />
             <Text>Salvar</Text>
           </Button>
