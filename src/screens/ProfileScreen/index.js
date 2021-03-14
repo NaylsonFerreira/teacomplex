@@ -1,10 +1,11 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Container, Content, Button, Text} from 'native-base';
 import {AuthContext} from '../../hooks/authContext';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Header, Form} from '../../componets';
 import {useState} from 'react';
 import {StyleSheet} from 'react-native';
+import {LoadingScreen} from '../LoadingScreen';
 
 const styles = StyleSheet.create({
   button: {
@@ -13,8 +14,17 @@ const styles = StyleSheet.create({
 });
 
 export const ProfileScreen = ({navigation}) => {
-  const {user, updateUser, error} = useContext(AuthContext);
-  const [data, setData] = useState({...user});
+  const {user, getMe, updateUser, error} = useContext(AuthContext);
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    return setData({...user});
+  }, [user]);
+
+  if (!user.id) {
+    getMe();
+    return <LoadingScreen />;
+  }
 
   return (
     <Container>

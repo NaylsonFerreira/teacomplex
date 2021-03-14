@@ -52,6 +52,19 @@ export const authActions = (dispatch) => {
       dispatch({type: 'SIGN_OUT'});
     },
 
+    getMe: async () => {
+      const {status, data} = await api.get('me/');
+      if (status === 200) {
+        dispatch({type: 'UPDATE_USER', user: data});
+      } else {
+        await setToken();
+        dispatch({
+          type: 'SIGN_IN_ERROR',
+          error: 'Faça login para continuar',
+        });
+      }
+    },
+
     signUp: async ({email, password, password2}) => {
       dispatch({type: 'LOADING'});
       if (password?.length < 8) {

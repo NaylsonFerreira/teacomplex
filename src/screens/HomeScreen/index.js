@@ -27,7 +27,7 @@ export const HomeScreen = ({navigation}) => {
   } = useContext(AuthContext);
 
   useEffect(() => {
-    return loadMySkills(user?.id);
+    return loadMySkills(user.id);
   }, [loadMySkills, user.id]);
 
   if (!listaJogos.length) {
