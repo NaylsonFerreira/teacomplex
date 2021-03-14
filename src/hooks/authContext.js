@@ -22,7 +22,9 @@ const initialState = {
     user: '',
   },
   listaJogos: [],
+  meusJogos: [],
   listaHabilidades: [],
+  minhasHabilidades: [],
 };
 
 const AuthContext = createContext();
@@ -69,12 +71,26 @@ const AuthProvider = ({children}) => {
           loading: false,
           listaJogos: action.listaJogos,
         };
+      case 'LOAD_MY_GAMES':
+        return {
+          ...prevState,
+          error: false,
+          loading: false,
+          meusJogos: action.meusJogos,
+        };
       case 'LOAD_ALL_SKILLS':
         return {
           ...prevState,
           error: false,
           loading: false,
           listaHabilidades: action.listaHabilidades,
+        };
+      case 'LOAD_MY_SKILLS':
+        return {
+          ...prevState,
+          error: false,
+          loading: false,
+          minhasHabilidades: action.minhasHabilidades,
         };
     }
   }, initialState);

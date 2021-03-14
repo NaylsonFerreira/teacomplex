@@ -1,26 +1,46 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {Container, Content, Text} from 'native-base';
+import {Container, Content, Text, Button} from 'native-base';
 import {Header, Form} from '../../componets';
 import {AuthContext} from '../../hooks/authContext';
 import {LoadingScreen} from '../LoadingScreen';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
+    flexDirection: 'column',
   },
   form: {
     marginBottom: 30,
   },
+  button: {
+    backgroundColor: '#4285f4',
+  },
 });
 
 export const HabilidadeScreen = ({navigation}) => {
-  const {listaHabilidades, error, loadAllSkills} = useContext(AuthContext);
+  const {
+    error,
+    user,
+    listaHabilidades,
+    minhasHabilidades,
+    loadAllSkills,
+    loadMySkills,
+    updateSkills,
+  } = useContext(AuthContext);
+
   const [data, setData] = useState({habilidades: []});
+
+  useEffect(() => {
+    return setData({habilidades: minhasHabilidades});
+  }, [minhasHabilidades]);
+
   if (!listaHabilidades.length) {
-    setTimeout(() => loadAllSkills(), 3000);
+    loadAllSkills();
+    loadMySkills(user.id);
+  }
+
+  if (!listaHabilidades.length) {
     return <LoadingScreen />;
   }
 
@@ -30,10 +50,9 @@ export const HabilidadeScreen = ({navigation}) => {
 
   return (
     <Container style={styles.container}>
-      <Content>
-        <Header navigation={navigation} title="TeaComplex" />
-        {error && <Text style={styles.error}>{error}</Text>}
-        <Text>{JSON.stringify(data)}</Text>
+      <Header navigation={navigation} title="TeaComplex" />
+      {error && <Text style={styles.error}>{error}</Text>}
+      <Content style={styles.body}>
         <Form
           style={styles.form}
           fields={[
@@ -47,6 +66,13 @@ export const HabilidadeScreen = ({navigation}) => {
           data={data}
         />
       </Content>
+      <Button
+        style={styles.button}
+        full
+        onPress={() => updateSkills({id: user.id, skills: data.habilidades})}>
+        <Icon size={20} color="white" name="save" />
+        <Text>Salvar</Text>
+      </Button>
     </Container>
   );
 };

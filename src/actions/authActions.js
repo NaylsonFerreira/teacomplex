@@ -148,11 +148,63 @@ export const authActions = (dispatch) => {
         .then(function ({status, data}) {
           if (status === 200) {
             dispatch({type: 'LOAD_ALL_SKILLS', listaHabilidades: data});
+            dispatch({type: 'LOAD_MY_GAMES', meusJogos: data.games});
           } else {
             dispatch({
               type: 'ERROR',
-              error: data.error || 'Falha ao carregar as habilidades',
+              error: data.error || 'Falha ao carregar todas as habilidades',
             });
+          }
+        });
+    },
+    loadMySkills: (id) => {
+      if (id) {
+        api
+          .get(`/instance/PlayProfile/Jogador${id}/`)
+          .then(function ({status, data}) {
+            if (status === 200) {
+              const properties = data.properties.map((prop) =>
+                prop.split('Tem_habilidade').join(' ').trim(),
+              );
+              dispatch({type: 'LOAD_MY_SKILLS', minhasHabilidades: properties});
+              dispatch({type: 'LOAD_MY_GAMES', meusJogos: data.games});
+            } else {
+              dispatch({
+                type: 'ERROR',
+                error: data.error || 'Falha ao carregar suas as habilidades',
+              });
+            }
+          });
+      }
+    },
+    updateSkills: ({id, skills}) => {
+      dispatch({type: 'LOADING'});
+      api
+        .post(`/add/instance/PlayProfile/`, {
+          instance_name: 'Jogador' + id,
+          class_name: 'Jogador',
+          property_name: 'Tem_habilidade',
+          property_values: skills,
+        })
+        .then(function ({status, data}) {
+          switch (status) {
+            case 200:
+              const properties = data.properties.map((prop) =>
+                prop.split('Tem_habilidade').join(' ').trim(),
+              );
+              dispatch({type: 'LOAD_MY_SKILLS', minhasHabilidades: properties});
+              break;
+            case 400:
+              dispatch({
+                type: 'ERROR',
+                error: data.error || 'Falha ao salvar',
+              });
+              break;
+            default:
+              dispatch({
+                type: 'ERROR',
+                error: 'Error desconhecido',
+              });
           }
         });
     },
