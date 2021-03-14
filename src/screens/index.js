@@ -5,6 +5,7 @@ import {SignInScreen} from './SignInScreen';
 import {SignUpScreen} from './SignUpScreen';
 import {ResetPasswordScreen} from './ResetPasswordScreen';
 import {ProfileScreen} from './ProfileScreen';
+import {HabilidadeScreen} from './HabilidadeScreen';
 export {
   HomeScreen,
   MenuDrawer,
@@ -13,4 +14,5 @@ export {
   SignInScreen,
   ResetPasswordScreen,
   ProfileScreen,
+  HabilidadeScreen,
 };

@@ -22,6 +22,7 @@ const initialState = {
     user: '',
   },
   listaJogos: [],
+  listaHabilidades: [],
 };
 
 const AuthContext = createContext();
@@ -67,6 +68,13 @@ const AuthProvider = ({children}) => {
           error: false,
           loading: false,
           listaJogos: action.listaJogos,
+        };
+      case 'LOAD_ALL_SKILLS':
+        return {
+          ...prevState,
+          error: false,
+          loading: false,
+          listaHabilidades: action.listaHabilidades,
         };
     }
   }, initialState);

@@ -58,14 +58,9 @@ export const MenuDrawer = ({navigation, signOut}) => {
         <Button
           style={styles.button}
           full
-          onPress={() => navigation.navigate('HomeScreen')}>
-          <IconMi
-            name="notifications"
-            color="white"
-            size={30}
-            style={styles.icon}
-          />
-          <Text style={styles.name}>Notificações</Text>
+          onPress={() => navigation.navigate('HabilidadeScreen')}>
+          <IconMi name="list" color="white" size={30} style={styles.icon} />
+          <Text style={styles.name}>Habilidades</Text>
         </Button>
         <Button style={styles.logout} full onPress={() => signOut()}>
           <IconMi

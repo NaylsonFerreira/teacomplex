@@ -142,6 +142,20 @@ export const authActions = (dispatch) => {
         }
       });
     },
+    loadAllSkills: () => {
+      api
+        .get(`/subclasses/PlayProfile/Habilidade/`)
+        .then(function ({status, data}) {
+          if (status === 200) {
+            dispatch({type: 'LOAD_ALL_SKILLS', listaHabilidades: data});
+          } else {
+            dispatch({
+              type: 'ERROR',
+              error: data.error || 'Falha ao carregar as habilidades',
+            });
+          }
+        });
+    },
   };
 };
 export default authActions;

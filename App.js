@@ -14,6 +14,7 @@ import {
   LoadingScreen,
   ResetPasswordScreen,
   ProfileScreen,
+  HabilidadeScreen,
 } from './src/screens';
 
 const Drawer = createDrawerNavigator();
@@ -56,6 +57,7 @@ export default function App() {
     <Drawer.Navigator
       drawerContent={(props) => MenuDrawer({...props, signOut})}>
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
+      <Drawer.Screen name="HabilidadeScreen" component={HabilidadeScreen} />
       <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
     </Drawer.Navigator>
   );
