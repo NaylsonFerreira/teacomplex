@@ -24,6 +24,7 @@ export const HomeScreen = ({navigation}) => {
     listaJogos,
     listaHabilidades,
     meusJogos,
+    minhasHabildades,
     error,
   } = useContext(AuthContext);
 
@@ -45,10 +46,13 @@ export const HomeScreen = ({navigation}) => {
   }
 
   let filteredGames = listaJogos;
-
   if (meusJogos?.length) {
     filteredGames = listaJogos.filter(({nome}) => meusJogos?.includes(nome));
   }
+  setInterval(() => {
+    console.log(meusJogos);
+    console.log(minhasHabildades);
+  }, 3000);
 
   return (
     <Container style={styles.container}>

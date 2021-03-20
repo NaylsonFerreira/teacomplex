@@ -1,6 +1,6 @@
 import {Linking, Alert} from 'react-native';
 import {setToken} from '../utils';
-import {api, baseURL} from '../utils/api';
+import {api, baseURL, http} from '../utils/api';
 
 export const authActions = (dispatch) => {
   return {
@@ -25,11 +25,16 @@ export const authActions = (dispatch) => {
 
       api
         .post('login/json/', {username: email, password})
-        .then(function ({status, data}) {
+        .then(async function ({status, data}) {
           switch (status) {
             case 200:
-              setToken(data.token);
-              dispatch({type: 'SIGN_IN_SUCESS', token: data.token});
+              const {token} = data;
+
+              http.defaults.headers.common.Authorization = `Token ${token}`;
+              setTimeout(() => console.log(token), 3000);
+
+              setToken(token);
+              dispatch({type: 'SIGN_IN_SUCESS', token});
               break;
             case 400:
               dispatch({
