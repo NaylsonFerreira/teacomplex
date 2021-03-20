@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
 export const HomeScreen = ({navigation}) => {
   const {
     user,
+    token,
     loadAllSkills,
     loadMySkills,
     loadAllGames,
@@ -30,6 +31,9 @@ export const HomeScreen = ({navigation}) => {
     return loadMySkills(user.id);
   }, [loadMySkills, user.id]);
 
+  if (!token) {
+    return <LoadingScreen />;
+  }
   if (!listaJogos.length) {
     loadAllGames();
     return <LoadingScreen />;
