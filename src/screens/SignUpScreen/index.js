@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
 export const SignUpScreen = ({navigation}) => {
   const {signUp, error} = useContext(AuthContext);
   const [data, setData] = useState({
-    email: 'naylsonfsa@gmail.com',
-    password: 'overload',
-    password2: 'overload',
+    email: '',
+    password: '',
+    password2: '',
   });
 
   return (

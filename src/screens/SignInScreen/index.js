@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
 export const SignInScreen = ({navigation}) => {
   const {signIn, resetPassword, error} = useContext(AuthContext);
   const [data, setData] = useState({
-    email: 'userteste@gmail.com',
-    password: 'overload',
+    email: '',
+    password: '',
   });
 
   return (
