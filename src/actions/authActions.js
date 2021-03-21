@@ -96,10 +96,14 @@ export const authActions = (dispatch) => {
       }
       api
         .post('singup/json/', {email, password})
-        .then(function ({status, data}) {
+        .then(async function ({status, data}) {
           switch (status) {
             case 200:
-              setToken(data.token);
+              const {token} = data;
+
+              http.defaults.headers.common.Authorization = `Token ${token}`;
+
+              await setToken(token);
               dispatch({type: 'SIGN_IN_SUCESS', token: data.token});
               break;
             case 400:

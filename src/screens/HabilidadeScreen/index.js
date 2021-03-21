@@ -22,6 +22,7 @@ export const HabilidadeScreen = ({navigation}) => {
   const {
     error,
     user,
+    getMe,
     listaHabilidades,
     minhasHabilidades,
     loadAllSkills,
@@ -41,6 +42,11 @@ export const HabilidadeScreen = ({navigation}) => {
 
   if (!listaHabilidades.length) {
     loadAllSkills();
+    return <LoadingScreen />;
+  }
+
+  if (!user.id) {
+    getMe();
     return <LoadingScreen />;
   }
 
