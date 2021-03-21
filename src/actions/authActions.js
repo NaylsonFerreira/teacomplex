@@ -31,9 +31,8 @@ export const authActions = (dispatch) => {
               const {token} = data;
 
               http.defaults.headers.common.Authorization = `Token ${token}`;
-              setTimeout(() => console.log(token), 3000);
 
-              setToken(token);
+              await setToken(token);
               dispatch({type: 'SIGN_IN_SUCESS', token});
               break;
             case 400:
@@ -149,6 +148,7 @@ export const authActions = (dispatch) => {
       });
     },
     loadAllGames: () => {
+      console.log('buscando todos jogos');
       api.get(`api/jogo/`).then(function ({status, data}) {
         if (status === 200) {
           dispatch({type: 'LOAD_ALL_GAMES', listaJogos: data});
@@ -160,7 +160,8 @@ export const authActions = (dispatch) => {
         }
       });
     },
-    loadAllSkills: () => {
+    loadAllSkills: async () => {
+      console.log('buscando todas habilidades');
       api
         .get(`/subclasses/PlayProfile/Habilidade/`)
         .then(function ({status, data}) {
@@ -176,9 +177,10 @@ export const authActions = (dispatch) => {
         });
     },
     loadMySkills: (id) => {
+      console.log('buscando minhas habilidades');
       if (id) {
         api
-          .get(`/instance/PlayProfile/Jogador${id}/`)
+          .get(`/instance/PlayProfile/Jogador_${id}/`)
           .then(function ({status, data}) {
             if (status === 200) {
               const properties = data.properties.map((prop) =>
@@ -196,10 +198,11 @@ export const authActions = (dispatch) => {
       }
     },
     updateSkills: ({id, skills}) => {
+      console.log('atualizanndo minhas habilidades');
       dispatch({type: 'LOADING'});
       api
         .post(`/add/instance/PlayProfile/`, {
-          instance_name: 'Jogador' + id,
+          instance_name: 'Jogador_' + id,
           class_name: 'Jogador',
           property_name: 'Tem_habilidade',
           property_values: skills,

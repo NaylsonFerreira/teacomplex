@@ -32,15 +32,15 @@ export const HabilidadeScreen = ({navigation}) => {
   const [data, setData] = useState({habilidades: []});
 
   useEffect(() => {
+    return loadMySkills(user.id);
+  }, []);
+
+  useEffect(() => {
     return setData({habilidades: minhasHabilidades});
   }, [minhasHabilidades]);
 
   if (!listaHabilidades.length) {
     loadAllSkills();
-    loadMySkills(user.id);
-  }
-
-  if (!listaHabilidades.length) {
     return <LoadingScreen />;
   }
 

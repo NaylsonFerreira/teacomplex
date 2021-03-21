@@ -1,10 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container, Content, Text} from 'native-base';
 import {Header, List} from '../../componets';
 import {AuthContext} from '../../hooks/authContext';
 import {LoadingScreen} from '../LoadingScreen';
-import {useEffect} from 'react/cjs/react.development';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,24 +16,19 @@ const styles = StyleSheet.create({
 export const HomeScreen = ({navigation}) => {
   const {
     user,
-    token,
     loadAllSkills,
     loadMySkills,
     loadAllGames,
     listaJogos,
     listaHabilidades,
     meusJogos,
-    minhasHabildades,
     error,
   } = useContext(AuthContext);
 
   useEffect(() => {
     return loadMySkills(user.id);
-  }, [loadMySkills, user.id]);
+  }, []);
 
-  if (!token) {
-    return <LoadingScreen />;
-  }
   if (!listaJogos.length) {
     loadAllGames();
     return <LoadingScreen />;
@@ -49,10 +43,6 @@ export const HomeScreen = ({navigation}) => {
   if (meusJogos?.length) {
     filteredGames = listaJogos.filter(({nome}) => meusJogos?.includes(nome));
   }
-  setInterval(() => {
-    console.log(meusJogos);
-    console.log(minhasHabildades);
-  }, 3000);
 
   return (
     <Container style={styles.container}>

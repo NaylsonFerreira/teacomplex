@@ -101,7 +101,6 @@ const AuthProvider = ({children}) => {
       const token = await getToken();
       if (token) {
         http.defaults.headers.common.Authorization = `Token ${token}`;
-        setTimeout(() => console.log(token), 3000);
       }
 
       const {status, data} = await api.get('me/');
