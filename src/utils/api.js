@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const baseURL = 'http://www.pcomplex.kinghost.net/';
+// export const baseURL = 'http://192.168.100.5:8080/';
 
 export const http = axios.create({
   baseURL,
