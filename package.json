@@ -20,7 +20,7 @@
     "@react-native-firebase/messaging": "^10.8.0",
     "@react-navigation/drawer": "^5.12.3",
     "@react-navigation/native": "^5.9.2",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "native-base": "^2.15.2",
     "react": "17.0.1",
     "react-hook-form": "^6.15.3",
