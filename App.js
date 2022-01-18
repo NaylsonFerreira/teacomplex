@@ -21,7 +21,7 @@ const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const onMessageReceived = (remoteMessage) => {
+  const onMessageReceived = remoteMessage => {
     console.log(remoteMessage.notification);
     Alert.alert(
       remoteMessage.notification.title,
@@ -54,8 +54,7 @@ export default function App() {
     );
   }
   return (
-    <Drawer.Navigator
-      drawerContent={(props) => MenuDrawer({...props, signOut})}>
+    <Drawer.Navigator drawerContent={props => MenuDrawer({...props, signOut})}>
       <Drawer.Screen name="HomeScreen" component={HomeScreen} />
       <Drawer.Screen name="HabilidadeScreen" component={HabilidadeScreen} />
       <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />

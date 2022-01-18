@@ -75,7 +75,7 @@ export const ResetPasswordScreen = ({navigation}) => {
         <Thumbnail
           style={styles.logo}
           source={{
-            uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
+            uri: 'https://overloadlab.com.br/uploads/pcomplex/static/teacomplex.png',
           }}
         />
         <Form style={styles.form}>
@@ -85,7 +85,7 @@ export const ResetPasswordScreen = ({navigation}) => {
             <Label>E-mail</Label>
             <Input
               defaultValue={email}
-              onChangeText={(value) => setEmail(value)}
+              onChangeText={value => setEmail(value)}
             />
           </Item>
           <Button

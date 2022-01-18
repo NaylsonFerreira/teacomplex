@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const baseURL = 'http://www.pcomplex.kinghost.net/';
-// export const baseURL = 'http://192.168.100.5:8080/';
+export const baseURL = 'http://pycomplex.overloadlab.com.br/';
+// export const baseURL = 'http://192.168.11.12:8080/';
 
 export const http = axios.create({
   baseURL,

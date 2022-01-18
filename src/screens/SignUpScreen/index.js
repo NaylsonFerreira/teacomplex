@@ -68,7 +68,7 @@ export const SignUpScreen = ({navigation}) => {
         <Thumbnail
           style={styles.logo}
           source={{
-            uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
+            uri: 'https://overloadlab.com.br/uploads/pcomplex/static/teacomplex.png',
           }}
         />
         <Text style={styles.name}>Cadastre-se</Text>
@@ -78,21 +78,21 @@ export const SignUpScreen = ({navigation}) => {
             <Label>E-mail</Label>
             <Input
               defaultValue={data.email}
-              onChangeText={(value) => setData({...data, email: value})}
+              onChangeText={value => setData({...data, email: value})}
             />
           </Item>
           <Item floatingLabel last>
             <Label>Senha</Label>
             <Input
               defaultValue={data.password}
-              onChangeText={(value) => setData({...data, password: value})}
+              onChangeText={value => setData({...data, password: value})}
             />
           </Item>
           <Item floatingLabel last>
             <Label>Repetir a Senha</Label>
             <Input
               defaultValue={data.password2}
-              onChangeText={(value) => setData({...data, password2: value})}
+              onChangeText={value => setData({...data, password2: value})}
             />
           </Item>
           <Button full style={styles.login_email} onPress={() => signUp(data)}>

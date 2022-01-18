@@ -32,7 +32,7 @@ export const LoadingScreen = () => {
           <Thumbnail
             style={styles.logo}
             source={{
-              uri: 'https://overloadlab.com.br/pcomplex/static/teacomplex.png',
+              uri: 'https://overloadlab.com.br/uploads/pcomplex/static/teacomplex.png',
             }}
           />
           <Text style={styles.name}>TeaComplex</Text>
