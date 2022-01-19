@@ -11,5 +11,11 @@
   },
   "[java]": {
     "editor.defaultFormatter": "mwpb.java-prettier-formatter"
+  },
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "fabianlauer.vs-code-xml-format"
   }
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseURL = 'http://pycomplex.overloadlab.com.br/';
+export const baseURL = 'https://pycomplex.overloadlab.com.br/';
 // export const baseURL = 'http://192.168.11.12:8080/';
 
 export const http = axios.create({
